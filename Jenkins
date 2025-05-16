@@ -10,6 +10,13 @@ pipeline {
         PROD_SERVER = 'prod.example.com'
         APP_NAME = 'myapp'
     }
+    parameters {
+        string(
+            name: 'ec2-ssh-username',
+            defaultValue: 'ec2-user',
+            description: 'Enter the EC2 SSH username'
+        )
+    }
 
     stages {
 
