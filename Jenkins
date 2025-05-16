@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        MAVEN_HOME = tool 'Maven 3.8.5'
+        MAVEN_HOME = 'Maven 3.8.5'
         SONARQUBE = 'SonarQubeServer'   
         STAGING_SERVER = 'staging.example.com'
         PROD_SERVER = 'prod.example.com'
