@@ -8,7 +8,7 @@ pipeline {
         DEPLOY_KEY = credentials('ec2-ssh-private-key') // SSH private key in Jenkins
         STAGING_SERVER = 'staging.example.com'
         PROD_SERVER = 'prod.example.com'
-        APP_NAME = 'myapp.jar'
+        APP_NAME = 'myapp'
     }
 
     stages {
