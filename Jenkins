@@ -3,21 +3,11 @@ pipeline {
 
     environment {
         MAVEN_HOME = tool 'Maven 3.8.5'
-        SONARQUBE = 'SonarQubeServer'     // Configure in Jenkins > Manage Jenkins > Global Tool Configuration
-        DEPLOY_USER = credentials('ec2-ssh-username') // SSH username credentials in Jenkins
-        DEPLOY_KEY = credentials('ec2-ssh-private-key') // SSH private key in Jenkins
+        SONARQUBE = 'SonarQubeServer'   
         STAGING_SERVER = 'staging.example.com'
         PROD_SERVER = 'prod.example.com'
         APP_NAME = 'myapp'
     }
-    parameters {
-        string(
-            name: 'ec2-ssh-username',
-            defaultValue: 'ec2-user',
-            description: 'Enter the EC2 SSH username'
-        )
-    }
-
     stages {
 
         stage('Build') {
