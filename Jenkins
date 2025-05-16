@@ -1,32 +1,58 @@
 pipeline {
     agent any
+
+    environment {
+        MAVEN_HOME = tool 'Maven 3.8.5'
+        SONARQUBE = 'SonarQubeServer'     // Configure in Jenkins > Manage Jenkins > Global Tool Configuration
+        DEPLOY_USER = credentials('ec2-ssh-username') // SSH username credentials in Jenkins
+        DEPLOY_KEY = credentials('ec2-ssh-private-key') // SSH private key in Jenkins
+        STAGING_SERVER = 'staging.example.com'
+        PROD_SERVER = 'prod.example.com'
+        APP_NAME = 'myapp.jar'
+    }
+
     stages {
-        stage('Checkout') {
+
+        stage('Build') {
             steps {
-                git branch: 'main', url: 'https://github.com/your_username/8.2CDevSecOps.git'
+                echo 'Building the application with ${MAVEN_HOME}'
             }
         }
-        stage('Install Dependencies') {
+
+        stage('Unit and Integration Tests') {
             steps {
-                sh 'npm install'
+                echo 'Running unit and integration tests in ${MAVEN_HOME} and JUnit/TestNG'
+             }
+        }
+
+        stage('Code Analysis') {
+            steps {
+                echo 'Running code quality analysis with SonarQube...'
             }
         }
-        stage('Run Tests') {
+
+        stage('Security Scan') {
             steps {
-                sh 'npm test || true' // Allows pipeline to continue despite test failures
+                echo 'Running security scan with OWASP Dependency-Check...'
             }
         }
-        stage('Generate Coverage Report') {
+
+        stage('Deploy to Staging') {
             steps {
-                // Ensure coverage report exists
-                sh 'npm run coverage || true'
+                echo 'Deploying to Staging AWS EC2 server...'
             }
         }
-        stage('NPM Audit (Security Scan)') {
+
+        stage('Integration Tests on Staging') {
             steps {
-                sh 'npm audit || true' // This will show known CVEs in the output
+                echo 'Running integration tests on staging server JUnit and TestNG...'
+            }
+        }
+
+        stage('Deploy to Production') {
+            steps {
+                echo 'Deploying to Production AWS EC2 server...'
             }
         }
     }
 }
-
